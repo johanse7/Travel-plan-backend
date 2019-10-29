@@ -1,0 +1,29 @@
+{
+  "name": "Travel-plan-backend",
+  "version": "1.0.0",
+  "description": "Backend basado en node js Express",
+  "main": "index.js",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongodb": "^3.3.3"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.4"
+  },
+  "scripts": {
+    "dev": "SET DEBUG=app:*&& nodemon src/index.js",
+    "start": "NODE_ENV=production node src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/johanse7/Travel-plan-backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/johanse7/Travel-plan-backend/issues"
+  },
+  "homepage": "https://github.com/johanse7/Travel-plan-backend#readme"
+}
