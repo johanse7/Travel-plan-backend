@@ -44,6 +44,7 @@ class MongoConnect {
   }
 
   create(collection, data) {
+    console.log(data);
     return this.connect()
       .then(db => {
         return db.collection(collection).insertOne(data);
