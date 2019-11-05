@@ -12,7 +12,6 @@ const travelPlanMaster = (app) => {
 
   const airlineFlightService = new AirlineFlightService();
 
-
   router.get('/airlineFlight', async (req, res, next) => {
     cacheResponse(res,FIVE_MINUTES_IN_SECONDS)
     const airlineFlights = await airlineFlightService.getAirlineFlight()
