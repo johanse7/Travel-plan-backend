@@ -4,11 +4,13 @@ const app = express();
 const { config } = require('./config');
 const travelPlanMaster = require('./routes/airlineFlights');
 const userAirLineFligthApi = require('./routes/userAirlineFlight');
+const authApi = require('./routes/auth');
 
 app.use(cors());
 
 app.use(express.json());
-
+//routes
+authApi(app);
 travelPlanMaster(app);
 userAirLineFligthApi(app);
 

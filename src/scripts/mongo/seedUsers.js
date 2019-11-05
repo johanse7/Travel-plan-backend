@@ -14,13 +14,13 @@ const users = [
     isAdmin: true
   },
   {
-    email: 'jose@undefined.sh',
-    name: 'Jose Maria',
+    email: 'sebatsian@undefined.sh',
+    name: 'sebastian',
     password: config.defaultUserPassword
   },
   {
-    email: 'maria@undefined.sh',
-    name: 'Maria Jose',
+    email: 'stefanny@undefined.sh',
+    name: 'stefanny',
     password: config.defaultUserPassword
   }
 ];
@@ -44,6 +44,7 @@ async function seedUsers() {
     const mongoDB = new MongoLib();
 
     const promises = users.map(async user => {
+      console.log(user)
       const userId = await createUser(mongoDB, user);
       debug(chalk.green('User created with id:', userId));
     });

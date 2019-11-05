@@ -8,22 +8,22 @@ const MongoLib = require('../../lib/mongo');
 const adminScopes = [
   'signin:auth',
   'signup:auth',
-  'read:movies',
-  'create:movies',
-  'update:movies',
-  'delete:movies',
-  'read:user-movies',
-  'create:user-movies',
-  'delete:user-movies'
+  'read:airlineFligth',
+  'create:airlineFligth',
+  'update:airlineFligth',
+  'delete:airlineFligth',
+  'read:user-airlineFligths',
+  'create:user-airlineFligths',
+  'delete:user-airlineFligths'
 ];
 
 const publicScopes = [
   'signin:auth',
   'signup:auth',
-  'read:movies',
-  'read:user-movies',
-  'create:user-movies',
-  'delete:user-movies'
+  'read:airlineFligth',
+  'read:user-airlineFligths',
+  'create:user-airlineFligths',
+  'delete:user-airlineFligths'
 ];
 
 const apiKeys = [
