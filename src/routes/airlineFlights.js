@@ -1,10 +1,13 @@
 const express = require('express');
-const path = require('path');
+const passport = require('passport');
 const AirlineFlightService = require('../services/airlineFlight');
 const cacheResponse = require('../utils/cacheResponse');
 const {
   FIVE_MINUTES_IN_SECONDS
 } = require('../utils/time');
+
+//JWT atrategy
+ require('../utils/auth/strategies/jwt');
 
 const travelPlanMaster = (app) => {
   const router = express.Router();
@@ -12,8 +15,9 @@ const travelPlanMaster = (app) => {
 
   const airlineFlightService = new AirlineFlightService();
 
-  router.get('/airlineFlight', async (req, res, next) => {
-    cacheResponse(res,FIVE_MINUTES_IN_SECONDS)
+  router.get('/airlineFlight',  passport.authenticate('jwt', { session: false }), async (req, res, next) => {
+    cacheResponse(res, FIVE_MINUTES_IN_SECONDS)
+    console.log(FIVE_MINUTES_IN_SECONDS)
     const airlineFlights = await airlineFlightService.getAirlineFlight()
     res.status(200).json({
       data: airlineFlights,
@@ -23,7 +27,8 @@ const travelPlanMaster = (app) => {
   router.get('*', (req, res) => {
     res.status(404).send('Error 404');
   });
-  router.post('/airlineFlight', async function (
+
+  router.post('/airlineFlight', passport.authenticate('jwt', { session: false }), async function (
     req,
     res,
     next

@@ -3,8 +3,10 @@ const passport = require('passport');
 const boom = require('@hapi/boom');
 const jwt = require('jsonwebtoken');
 const ApiKeysService = require('../services/apiKeys');
-
 const { config } = require('../config');
+const UserService = require('../services/users');
+const validationHandler = require('../utils/middleware/validationHandler');
+const { createUserSchema } = require('../utils/schemas/users');
 
 //basic strategy
 
@@ -15,15 +17,18 @@ function authApi(app) {
     app.use('/api/auth', router);
 
     const apiKeyService = new ApiKeysService();
+    const userService = new UserService();
 
     router.post('/sign-in', async (req, res, next) => {
 
         const { apiKeyToken } = req.body;
+        console.log(apiKeyToken);
         if (!apiKeyToken)
             next(boom.unauthorized('api token is required'));
 
-        passport.authenticate('bascic', (error, user) => {
+        passport.authenticate('basic', (error, user) => {
             try {
+                console.log(user)
                 if (error || !user) {
                     next(boom.unauthorized());
                 }
@@ -36,10 +41,10 @@ function authApi(app) {
 
                     if (!apiKey)
                         next(boom.unauthorized());
-
-                    const { _id: id, name, email } = user;
+                    console.log(user);
+                    const { _id, name, email } = user;
                     const payload = {
-                        sub: id,
+                        sub: _id,
                         name,
                         email,
                         scopes: apiKey.scopes
@@ -48,7 +53,7 @@ function authApi(app) {
                         expiresIn: '15m'
                     });
 
-                    res.status(200).json({ token, user: { id, name, email } });
+                    res.status(200).json({ token, user: { _id, name, email } });
                 });
             } catch (error) {
 
@@ -56,6 +61,21 @@ function authApi(app) {
             }
 
         })(req, res, next);
+    });
+
+    router.post('/sign-up', async (req, res, nex) => {
+        const { body: user } = req;
+       
+        try {
+
+            const createdUserId = await userService.createUser({ user });
+            res.status(200).json({
+                data: createdUserId,
+                messagge: "user created"
+            });
+        } catch (error) {
+            next(error);
+        }
     });
 };
 

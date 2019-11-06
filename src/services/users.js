@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 
 class UserService {
   constructor() {
-    this.collection = 'user';
+    this.collection = 'users';
     this.mongoDB = new MongoLib();
   }
 
@@ -13,9 +13,10 @@ class UserService {
   };
 
   async createUser({ user }) {
+    
     const { name, email, password } = user;
     const hasshedPassword = await bcrypt.hash(password, 10);
-    const createUserId = await this.mongoDB.create(this.mongoDB, {
+    const createUserId = await this.mongoDB.create(this.collection, {
       name,
       email,
       password: hasshedPassword
