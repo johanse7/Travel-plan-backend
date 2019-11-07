@@ -3,6 +3,7 @@ const passport = require('passport');
 const userAirLineFligth = require('../services/userAirlineFlight');
 const validationHandler = require('../utils/middleware/validationHandler');
 const { userIdSchema } = require('../utils/schemas/users');
+const scopeValidacionHandler = require('../utils/middleware/scopesValidacionHandler');
 const {
   createUserAirLineFligthsSchema,
 } = require('../utils/schemas/userAirLineFligths');
@@ -16,7 +17,10 @@ function userAirLineFligthApi(app) {
 
   const userAirLineFligthService = new userAirLineFligth();
 
-  router.get('/', passport.authenticate('jwt', { session: false }), validationHandler({ userId: userIdSchema }, 'query'),
+  router.get('/', 
+  passport.authenticate('jwt', { session: false }),
+  scopeValidacionHandler(['read:user-airlineFligths']),
+   validationHandler({ userId: userIdSchema }, 'query'),
     async (req, res, next) => {
       const { userId } = req.query;
       try {
@@ -30,7 +34,10 @@ function userAirLineFligthApi(app) {
       }
     });
 
-  router.post('/',  passport.authenticate('jwt', { session: false }), validationHandler(createUserAirLineFligthsSchema),
+  router.post('/',  
+  passport.authenticate('jwt', { session: false }),
+  scopeValidacionHandler(['user-airlineFligths']),
+   validationHandler(createUserAirLineFligthsSchema),
     async (req, res, next) => {
       const { body: userAirlineFligth } = req;
       try {
