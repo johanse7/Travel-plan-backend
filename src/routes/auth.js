@@ -56,7 +56,6 @@ function authApi(app) {
                     res.status(200).json({ token, user: { _id, name, email } });
                 });
             } catch (error) {
-
                 next(error);
             }
 
