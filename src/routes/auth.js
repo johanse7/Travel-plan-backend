@@ -6,7 +6,7 @@ const ApiKeysService = require('../services/apiKeys');
 const { config } = require('../config');
 const UserService = require('../services/users');
 const validationHandler = require('../utils/middleware/validationHandler');
-const { createUserSchema } = require('../utils/schemas/users');
+const { createUserSchema, createPrividerUserSchema } = require('../utils/schemas/users');
 
 //basic strategy
 
@@ -62,9 +62,9 @@ function authApi(app) {
         })(req, res, next);
     });
 
-    router.post('/sign-up', async (req, res, nex) => {
+    router.post('/sign-up', async (req, res, next) => {
         const { body: user } = req;
-       
+
         try {
 
             const createdUserId = await userService.createUser({ user });
@@ -76,6 +76,41 @@ function authApi(app) {
             next(error);
         }
     });
+
+    router.post('/sign-provider',
+        validationHandler(createPrividerUserSchema),
+        async (req, res, next) => {
+            const { body } = req;
+
+            const { apiKeyToken, ...user } = body;
+
+            if (!apiKeyToken)
+                next(boom.unauthorized('apiKeyToken is required'));
+
+            try {
+                const queryUser = await userService.getOrCreateUser({ user });
+                const apiToken = await userService.getApiKey({ token: apiKeyToken });
+
+                if (!apiToken)
+                    next(boom.unauthorized());
+
+                const { _id: id, name, email } = queryUser;
+                const payload = {
+                    sub: id,
+                    name, 
+                    email,
+                    scopes: apiToken.scopes
+                }
+                const token = jwt.sign(payload, config.authJwtSecret, {
+                    expiresIn: '15m'
+                });
+
+                res.status(200).json({ token, user: { id, name, email } });
+
+            } catch (error) {
+                next(error)
+            }
+        });
 };
 
 

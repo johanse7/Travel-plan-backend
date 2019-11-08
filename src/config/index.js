@@ -13,6 +13,9 @@ const config = {
   defaultUserPassword: process.env.DEFAULT_USER_PASSWORD,
   publicApiKeyToken: process.env.PUBLIC_API_KEY_TOKEN,
   adminApiKeyToken: process.env.ADMIN_API_KEY_TOKEN,
+  GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
+  googleClientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  googleClientId: process.env.GOOGLE_CLIENT_ID
 };
 
 module.exports = { config };
