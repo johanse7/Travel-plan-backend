@@ -4,7 +4,7 @@ const joi = require('@hapi/joi');
 
 function validate(data, schema) {
  console.log(schema)
-  const { error } = schema.validate(data);
+  const { error } = joi.validate(data);
   return error;
 }
 

@@ -20,7 +20,7 @@ function userAirLineFligthApi(app) {
   router.get('/', 
   passport.authenticate('jwt', { session: false }),
   scopeValidacionHandler(['read:user-airlineFligths']),
-   validationHandler({ userId: userIdSchema }, 'query'),
+  // validationHandler({ userId: userIdSchema }, 'query'),
     async (req, res, next) => {
       const { userId } = req.query;
       try {
@@ -36,8 +36,8 @@ function userAirLineFligthApi(app) {
 
   router.post('/',  
   passport.authenticate('jwt', { session: false }),
-  scopeValidacionHandler(['user-airlineFligths']),
-   validationHandler(createUserAirLineFligthsSchema),
+  scopeValidacionHandler(['create:user-airlineFligths']),
+   //validationHandler(createUserAirLineFligthsSchema),
     async (req, res, next) => {
       const { body: userAirlineFligth } = req;
       try {

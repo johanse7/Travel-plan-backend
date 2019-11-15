@@ -42,9 +42,9 @@ function authApi(app) {
                     if (!apiKey)
                         next(boom.unauthorized());
                     console.log(user);
-                    const { _id, name, email } = user;
+                    const { _id : id, name, email } = user;
                     const payload = {
-                        sub: _id,
+                        sub: id,
                         name,
                         email,
                         scopes: apiKey.scopes
@@ -53,7 +53,7 @@ function authApi(app) {
                         expiresIn: '15m'
                     });
 
-                    res.status(200).json({ token, user: { _id, name, email } });
+                    res.status(200).json({ token, user: { id, name, email } });
                 });
             } catch (error) {
                 next(error);
@@ -78,7 +78,7 @@ function authApi(app) {
     });
 
     router.post('/sign-provider',
-        validationHandler(createPrividerUserSchema),
+        //validationHandler(createPrividerUserSchema),
         async (req, res, next) => {
             const { body } = req;
 
@@ -89,7 +89,7 @@ function authApi(app) {
 
             try {
                 const queryUser = await userService.getOrCreateUser({ user });
-                const apiToken = await userService.getApiKey({ token: apiKeyToken });
+                const apiToken = await apiKeyService.getApiKey({ token: apiKeyToken });
 
                 if (!apiToken)
                     next(boom.unauthorized());

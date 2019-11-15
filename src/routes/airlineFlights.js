@@ -17,8 +17,8 @@ const travelPlanMaster = (app) => {
   const airlineFlightService = new AirlineFlightService();
 
   router.get('/airlineFlight',
-    passport.authenticate('jwt', { session: false }),
-    scopeValidacionHandler(['read:airlineFligth']),
+    //passport.authenticate('jwt', { session: false }),
+    //scopeValidacionHandler(['read:airlineFligth']),
     async (req, res, next) => {
       cacheResponse(res, FIVE_MINUTES_IN_SECONDS)
       console.log(FIVE_MINUTES_IN_SECONDS)
@@ -33,8 +33,8 @@ const travelPlanMaster = (app) => {
   });
 
   router.post('/airlineFlight', 
-    passport.authenticate('jwt', { session: false }), 
-    scopeValidacionHandler(['create:airlineFligth']),
+   // passport.authenticate('jwt', { session: false }), 
+   // scopeValidacionHandler(['create:airlineFligth']),
     async function (
     req,
     res,
@@ -46,7 +46,7 @@ const travelPlanMaster = (app) => {
       const createAirlineFlightId = await airlineFlightService.createAirlineFlight({ airlineFlight });
       res.status(201).json({
         data: createAirlineFlightId,
-        message: 'Create product'
+        message: 'Create airlineFlight'
       });
     } catch (err) {
       next(err);

@@ -5,7 +5,6 @@ const bcrypt = require('bcrypt');
 const UserService = require('../../../services/users');
 
 passport.use(new BasicStrategy(async (email, password, cb) => {
-    console.log(email, "basic aitetica")
     const userService = new UserService();
     try {
         const user = await userService.getUser({ email });
