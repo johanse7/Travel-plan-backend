@@ -10,13 +10,16 @@ class AirlineFlightService {
     const airlineFlights = await this.mongoDB.getAll(this.collection);
     return airlineFlights || [];
   }
-  async createAirlineFlight  ({ airlineFlight }) {
+  async createAirlineFlight({ airlineFlight }) {
     const createAirlineFlightId = await this.mongoDB.create(this.collection, airlineFlight);
     return createAirlineFlightId;
   }
 
+  async getAirlineFligthById(airFligthId) {
+    return await this.mongoDB.get(this.collection, airFligthId);
+  }
 
 
 }
 
-module.exports =  AirlineFlightService;
+module.exports = AirlineFlightService;

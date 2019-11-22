@@ -7,9 +7,11 @@ const axios = require("axios");
 const { config } = require("./config");
 const app = express();
 
-app.use(cors());
 
-
+app.use(cors({
+  origin: config.siteUrl,
+  credentials: true
+}));
 // body parser
 app.use(express.json());
 
@@ -22,6 +24,30 @@ require("./utils/auth/strategies/basic");
 require("./utils/auth/strategies/oauth");
 //facebook strategy
 require("./utils/auth/strategies/facebook");
+
+
+app.get("/user-arirlineFligth", async function (req, res, next) {
+  try {
+    const { token } = req.cookies;
+    const { userId } = req.query;
+    console.log(req.query)
+    console.log(token)
+    const { data, status } = await axios({
+      url: `${config.apiUrl}/api/user-arirlineFligth/?userId=${userId}`,
+      headers: { Authorization: `Bearer ${token}` },
+      method: "GET",
+    });
+    if (status !== 200) {
+      return next(boom.badImplementation());
+    }
+    res.status(201).json(data);
+
+  } catch (error) {
+    next(error);
+  }
+
+});
+
 
 app.post("/auth/sign-in", async function (req, res, next) {
   passport.authenticate("basic", function (error, data) {
@@ -66,14 +92,11 @@ app.post("/auth/sign-up", async function (req, res, next) {
   }
 });
 
-app.get("/airlineFlight", async function (req, res, next) { });
 
 app.post("/user-arirlineFligth", async function (req, res, next) {
   try {
     const { body: userArirlineFligth } = req;
     const { token } = req.cookies;
-    console.log(req.cookies);
-    console.log(userArirlineFligth);
     const { data, status } = await axios({
       url: `${config.apiUrl}/api/user-arirlineFligth`,
       headers: { Authorization: `Bearer ${token}` },

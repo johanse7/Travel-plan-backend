@@ -38,6 +38,7 @@ class MongoConnect {
   }
 
   get(collection, id) {
+    console.log(id)
     return this.connect().then(db => {
       return db.collection(collection).findOne({ _id: ObjectId(id) });
     });

@@ -8,12 +8,15 @@ class UserAirlineFlight {
 
   async getUserAirlineFlights({ userId }) {
     const query = userId && { userId };
+    console.log(query);
     const userAirlineFlights = this.mongoDB.getAll(this.collection, query);
     return userAirlineFlights;
   }
 
-  async createUserAirlineFlight({ userAirlineFligh }) {
-    const userAirlineFlightId = this.mongoDB.create(this.collection, { userAirlineFligh });
+
+  async createUserAirlineFlight({ userAirlineFligth }) {
+    console.log(userAirlineFligth)
+    const userAirlineFlightId = this.mongoDB.create(this.collection, userAirlineFligth);
     return userAirlineFlightId;
   }
 }

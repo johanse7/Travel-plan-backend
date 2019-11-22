@@ -1,14 +1,27 @@
 {
   "name": "TravelMasterPlan",
   "version": 2,
-  "builds": [{ "src": "*/index.js", "use": "@now/node" }],
-  "routes": [{ "src": "/(.*)", "dest": "/src/index.js" }],
+  "builds": [
+    {
+      "src": "/src/index.js",
+      "use": "@now/node-server"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/src/index.js"
+    }
+  ],
   "env": {
-     "DB_USER": "@db_user",
-     "DB_PASSWORD" :"@db_password",
-     "DB_HOST":"@db_host",
-     "DB_NAME":"@db_name"
+    "DB_USER": "@db_user",
+    "DB_PASSWORD": "@db_password",
+    "DB_HOST": "@db_host",
+    "DB_NAME": "@db_name",
+    "DEFAULT_ADMIN_PASSWORD": "@default-admin-password",
+    "DEFAULT_USER_PASSWORD": "@default-user-password",
+    "AUTH_JWT_SECRET": "@auth_jwt_secret",
+    "PUBLIC_API_KEY_TOKEN": "@public_api_key_token",
+    "ADMIN_API_KEY_TOKEN": "@admin_api_key_token"
   }
-
-
 }

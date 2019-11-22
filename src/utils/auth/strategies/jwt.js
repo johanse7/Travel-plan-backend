@@ -13,7 +13,7 @@ passport.use(
              jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken()
         },
         async function (tokenPayload, cb) {
-            console.log(cb);
+            console.log(`expitation ${tokenPayload.exp}`);
             const userService = new UserService();
             try {
                 const user = await userService.getUser({ email: tokenPayload.email });

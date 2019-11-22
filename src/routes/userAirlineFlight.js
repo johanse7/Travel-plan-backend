@@ -17,14 +17,16 @@ function userAirLineFligthApi(app) {
 
   const userAirLineFligthService = new userAirLineFligth();
 
-  router.get('/', 
-  passport.authenticate('jwt', { session: false }),
-  scopeValidacionHandler(['read:user-airlineFligths']),
-  // validationHandler({ userId: userIdSchema }, 'query'),
+  router.get('/',
+    passport.authenticate('jwt', { session: false }),
+    scopeValidacionHandler(['read:user-airlineFligths']),
+    // validationHandler({ userId: userIdSchema }, 'query'),
     async (req, res, next) => {
       const { userId } = req.query;
+     
       try {
-        const userAirlineFligths = userAirLineFligthService.getUserAirlineFlights({ userId });
+        const userAirlineFligths = await userAirLineFligthService.getUserAirlineFlights({ userId });
+        console.log(userAirlineFligths)
         res.status(200).json({
           data: userAirlineFligths,
           message: 'user arline Fligths listed'
@@ -34,13 +36,14 @@ function userAirLineFligthApi(app) {
       }
     });
 
-  router.post('/',  
-  passport.authenticate('jwt', { session: false }),
-  scopeValidacionHandler(['create:user-airlineFligths']),
-   //validationHandler(createUserAirLineFligthsSchema),
+  router.post('/',
+    passport.authenticate('jwt', { session: false }),
+    scopeValidacionHandler(['create:user-airlineFligths']),
+    //validationHandler(createUserAirLineFligthsSchema),
     async (req, res, next) => {
       const { body: userAirlineFligth } = req;
       try {
+        console.log(userAirlineFligth)
         const createUserAirlineFlightId = await userAirLineFligthService.createUserAirlineFlight({ userAirlineFligth })
         res.status(201).json({
           data: createUserAirlineFlightId,

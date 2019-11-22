@@ -41,7 +41,7 @@ function authApi(app) {
 
                     if (!apiKey)
                         next(boom.unauthorized());
-                    console.log(user);
+              
                     const { _id : id, name, email } = user;
                     const payload = {
                         sub: id,
