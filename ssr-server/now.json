@@ -1,0 +1,25 @@
+{
+  "name": "TravelMasterPlan-server-side-render",
+  "version": 2,
+  "builds": [
+    {
+      "src": "index.js",
+      "use": "@now/node-server"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "index.js"
+    }
+  ],  
+  "env": {
+    "API_URL": "@api_url",
+    "SITE_URL": "@site_url",
+    "API_KEY_TOKEN": "@api_key_token",
+    "GOOGLE_CLIENT_ID": "@google_client_id",
+    "GOOGLE_CLIENT_SECRET": "@google_client_secret",
+    "FACEBOOK_CLIENT_ID": "@facebook_client_id",
+    "FACEBOOK_CLIENT_SECRET": "@facebook_client_secret"
+  }
+}

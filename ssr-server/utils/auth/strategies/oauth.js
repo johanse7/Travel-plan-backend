@@ -9,7 +9,7 @@ const GOOGLE_AUTHORIZATION_URL = "https://accounts.google.com/o/oauth2/v2/auth";
 const GOOGLE_TOKEN_URL = "https://www.googleapis.com/oauth2/v4/token";
 const GOOGLE_USERINFO_URL = "https://www.googleapis.com/oauth2/v3/userinfo";
 
-console.log(config.googleClientSecret)
+
 const oAuth2Strategy = new OAuth2Strategy(
   {
     authorizationURL: GOOGLE_AUTHORIZATION_URL,

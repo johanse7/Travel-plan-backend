@@ -26,7 +26,6 @@ function userAirLineFligthApi(app) {
      
       try {
         const userAirlineFligths = await userAirLineFligthService.getUserAirlineFlights({ userId });
-        console.log(userAirlineFligths)
         res.status(200).json({
           data: userAirlineFligths,
           message: 'user arline Fligths listed'

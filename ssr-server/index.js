@@ -30,8 +30,6 @@ app.get("/user-arirlineFligth", async function (req, res, next) {
   try {
     const { token } = req.cookies;
     const { userId } = req.query;
-    console.log(req.query)
-    console.log(token)
     const { data, status } = await axios({
       url: `${config.apiUrl}/api/user-arirlineFligth/?userId=${userId}`,
       headers: { Authorization: `Bearer ${token}` },
@@ -130,14 +128,14 @@ app.get(
       next(boom.unauthorized());
     }
 
-    const { token, ...user } = req.user;
+    const { token, user } = req.user;
 
     res.cookie("token", token, {
       httpOnly: !config.dev,
       secure: !config.dev
     });
-
-    res.status(200).json(user);
+    res.redirect(`${config.siteUrl}?id=${user.id}&name=${user.name}&email=${user.email}`)
+    // res.status(200).json(user);
   }
 );
 
@@ -145,20 +143,23 @@ app.get("/auth/facebook", passport.authenticate("facebook"));
 
 app.get(
   "/auth/facebook/callback",
-  passport.authenticate("facebook", { session: false }),
+  passport.authenticate("facebook", {
+    session: false
+  }),
   function (req, res, next) {
     if (!req.user) {
       next(boom.unauthorized());
     }
 
-    const { token, ...user } = req.user;
+    const { token, user } = req.user;
 
     res.cookie("token", token, {
       httpOnly: !config.dev,
       secure: !config.dev
     });
 
-    res.status(200).json(user);
+    //res.status(200).json(user);
+     res.redirect(`${config.siteUrl}?id=${user.id}&name=${user.name}&email=${user.email}`)
   }
 );
 
